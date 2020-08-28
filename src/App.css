@@ -1,3 +1,34 @@
 .App {
   text-align: center;
 }
+
+.navBar {
+  display: inline-flex;
+  list-style-type: none;
+  margin-left: 0px;
+  padding: 0px;
+}
+
+.mainList {
+  display: block;
+  list-style-type: none;
+  margin-left: 0px;
+  padding: 0px;
+}
+
+li {
+  padding: 5px;
+}
+
+.articleCard {
+  background: grey;
+  cursor: pointer;
+}
+
+.voteArrow {
+  height: 25px;
+}
+
+.bear {
+  height: 50px;
+}
