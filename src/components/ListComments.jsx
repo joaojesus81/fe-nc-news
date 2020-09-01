@@ -8,6 +8,7 @@ class Comments extends Component {
     comments: [],
     isLoading: true,
     commentAdded: false,
+    commentRemoved: false,
   };
 
   componentDidMount() {
@@ -26,6 +27,17 @@ class Comments extends Component {
           comments: comments,
           isLoading: !this.state.isLoading,
           commentAdded: false,
+          commentRemoved: false,
+        });
+      });
+    }
+    if (prevState.commentRemoved !== this.state.commentRemoved) {
+      this.getAllComments(this.props.articleId).then((comments) => {
+        this.setState({
+          comments: comments,
+          isLoading: !this.state.isLoading,
+          commentAdded: false,
+          commentRemoved: false,
         });
       });
     }
@@ -33,6 +45,10 @@ class Comments extends Component {
 
   commentAdder = () => {
     this.setState({ commentAdded: true });
+  };
+
+  commentRemover = () => {
+    this.setState({ commentRemoved: true });
   };
 
   getAllComments = (articleId) => {
@@ -48,7 +64,13 @@ class Comments extends Component {
           commentAdder={this.commentAdder}
         />
         {comments.map((comment) => {
-          return <CommentCard key={comment.comment_id} comment={comment} />;
+          return (
+            <CommentCard
+              key={comment.comment_id}
+              comment={comment}
+              commentRemover={this.commentRemover}
+            />
+          );
         })}
       </React.Fragment>
     );

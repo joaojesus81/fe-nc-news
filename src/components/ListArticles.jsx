@@ -3,6 +3,7 @@ import * as api from "../utils/api";
 import { Link } from "@reach/router";
 import Loading from "./Loading";
 import SortingMenu from "./SortingMenu";
+import Voter from "./Voter";
 
 class ListArticles extends Component {
   state = {
@@ -10,7 +11,6 @@ class ListArticles extends Component {
     isLoading: true,
     sortingOptions: "date",
     order: "desc",
-    articleAdded: false,
   };
 
   componentDidMount() {
@@ -59,6 +59,16 @@ class ListArticles extends Component {
     return api.getArticles(topic);
   };
 
+  updateVote = (vote, articleId) => {
+    const copyArticles = [...this.state.articles];
+    copyArticles.forEach((article) => {
+      if (article.article_id === articleId) {
+        article.votes += vote;
+        this.setState({ articles: copyArticles });
+      }
+    });
+  };
+
   render() {
     const { articles } = this.state;
     if (this.state.isLoading) return <Loading />;
@@ -81,25 +91,18 @@ class ListArticles extends Component {
             } = article;
             return (
               <li key={title}>
-                <Link to={`/article/${article_id}`}>
-                  <section className="articleCard">
-                    <p>
-                      <img
-                        className="voteArrow"
-                        src="https://ih1.redbubble.net/image.566557656.6363/ap,550x550,12x16,1,transparent,t.u2.png"
-                        alt="upvote article"
-                      />
-                      <img
-                        className="voteArrow"
-                        src="https://ih1.redbubble.net/image.566561202.6466/ap,550x550,12x16,1,transparent,t.u2.png"
-                        alt="downvote article"
-                      />
-                    </p>
+                <section className="articleCard">
+                  <Voter
+                    id={article_id}
+                    type={"articles"}
+                    updateVote={this.updateVote}
+                  />
+                  <Link to={`/article/${article_id}`}>
                     <h4>{title}</h4>
-                    <p>{`Submitted by ${author} about ${topic} at ${created_at}`}</p>
-                    <p>{`It has ${comment_count} comments and is scored at ${votes}`}</p>
-                  </section>
-                </Link>
+                  </Link>
+                  <p>{`Submitted by ${author} about ${topic} at ${created_at}`}</p>
+                  <p>{`It has ${comment_count} comments and is scored at ${votes}`}</p>
+                </section>
               </li>
             );
           })}

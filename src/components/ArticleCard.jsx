@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import * as api from "../utils/api";
 import Loading from "./Loading";
 import Comments from "./ListComments";
+import Voter from "./Voter";
 
 class ArticleCard extends Component {
   state = {
@@ -19,6 +20,12 @@ class ArticleCard extends Component {
     });
   }
 
+  updateVote = (vote) => {
+    const updatedArticle = { ...this.state.article };
+    updatedArticle.votes += vote;
+    this.setState({ article: updatedArticle });
+  };
+
   getArticle = (articleId) => {
     return api.getArticleById(articleId);
   };
@@ -31,18 +38,11 @@ class ArticleCard extends Component {
       return (
         <React.Fragment>
           <section className="articleCard">
-            <p>
-              <img
-                className="voteArrow"
-                src="https://ih1.redbubble.net/image.566557656.6363/ap,550x550,12x16,1,transparent,t.u2.png"
-                alt="upvote article"
-              />
-              <img
-                className="voteArrow"
-                src="https://ih1.redbubble.net/image.566561202.6466/ap,550x550,12x16,1,transparent,t.u2.png"
-                alt="downvote article"
-              />
-            </p>
+            <Voter
+              id={this.props.articleId}
+              type={"articles"}
+              updateVote={this.updateVote}
+            />
             <h4>{title}</h4>
             <h5>{body}</h5>
             <p>{`Submitted by ${author} at ${created_at}`}</p>

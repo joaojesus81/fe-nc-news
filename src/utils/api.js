@@ -53,3 +53,17 @@ export const postCommentToArticle = (id, comment) => {
       return data[0];
     });
 };
+
+export const deleteComment = (commentId) => {
+  return homeInstance.delete(`/comments/${commentId}`).then((response) => {
+    console.log(response);
+  });
+};
+
+export const patchVotes = (newVote, type, id) => {
+  return homeInstance
+    .patch(`/${type}/${id}`, { inc_votes: newVote })
+    .then((response) => {
+      console.log(response);
+    });
+};
