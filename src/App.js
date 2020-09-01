@@ -5,7 +5,7 @@ import Header from "./components/Header";
 import Nav from "./components/Nav";
 import ListArticles from "./components/ListArticles";
 import ArticleCard from "./components/ArticleCard";
-import Comments from "./components/Comments";
+import Comments from "./components/ListComments";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
       <Router>
         <ListArticles path="/" />
         <ListArticles path="/:topic" />
-        <ArticleCard path="/article/:id">
+        <ArticleCard path="/article/:articleId">
           <Comments path="/" />
         </ArticleCard>
       </Router>

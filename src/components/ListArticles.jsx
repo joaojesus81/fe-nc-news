@@ -10,6 +10,7 @@ class ListArticles extends Component {
     isLoading: true,
     sortingOptions: "date",
     order: "desc",
+    articleAdded: false,
   };
 
   componentDidMount() {

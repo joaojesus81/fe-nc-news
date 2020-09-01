@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import * as api from "../utils/api";
 import Loading from "./Loading";
-import Comments from "./Comments";
+import Comments from "./ListComments";
 
 class ArticleCard extends Component {
   state = {
@@ -10,7 +10,7 @@ class ArticleCard extends Component {
   };
 
   componentDidMount() {
-    this.getArticle(this.props.id).then((article) => {
+    this.getArticle(this.props.articleId).then((article) => {
       const singleArticle = article[0];
       this.setState({
         article: singleArticle,
@@ -19,22 +19,15 @@ class ArticleCard extends Component {
     });
   }
 
-  getArticle = (id) => {
-    return api.getArticleById(id);
+  getArticle = (articleId) => {
+    return api.getArticleById(articleId);
   };
 
   render() {
     if (this.state.isLoading) {
       return <Loading />;
     } else {
-      const {
-        title,
-        author,
-        created_at,
-        comment_count,
-        votes,
-        body,
-      } = this.state.article;
+      const { title, author, created_at, votes, body } = this.state.article;
       return (
         <React.Fragment>
           <section className="articleCard">
@@ -53,9 +46,10 @@ class ArticleCard extends Component {
             <h4>{title}</h4>
             <h5>{body}</h5>
             <p>{`Submitted by ${author} at ${created_at}`}</p>
-            <p>{`It has ${comment_count} comments and is scored at ${votes}`}</p>
+            <p>{`Score: ${votes}`}</p>
           </section>
-          <Comments id={this.props.id} />
+
+          <Comments articleId={this.props.articleId} />
         </React.Fragment>
       );
     }

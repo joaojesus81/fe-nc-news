@@ -28,10 +28,12 @@ export const getArticleById = (id) => {
   });
 };
 
-export const getCommentsByArticleId = (id) => {
-  return homeInstance.get(`/articles/${id}/comments`).then((article) => {
-    return article.data.article;
-  });
+export const getCommentsByArticleId = (articleId) => {
+  return homeInstance
+    .get(`/articles/${articleId}/comments`)
+    .then((comments) => {
+      return comments.data.comments;
+    });
 };
 
 export const getArticlesSorted = (sort_by, order, topic) => {
@@ -41,5 +43,13 @@ export const getArticlesSorted = (sort_by, order, topic) => {
     })
     .then((articles) => {
       return articles.data.articles;
+    });
+};
+
+export const postCommentToArticle = (id, comment) => {
+  return homeInstance
+    .post(`/articles/${id}/comments`, comment)
+    .then(({ data }) => {
+      return data[0];
     });
 };
