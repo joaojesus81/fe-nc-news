@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import * as api from "../utils/api";
 import CommentSubmit from "./CommentSubmit";
 import CommentCard from "./CommentCard";
+import Voter from "./Voter";
 
 class Comments extends Component {
   state = {
@@ -55,6 +56,16 @@ class Comments extends Component {
     return api.getCommentsByArticleId(articleId);
   };
 
+  updateVote = (vote, commentId) => {
+    const copyComments = [...this.state.comments];
+    copyComments.forEach((comment) => {
+      if (comment.comment_id === commentId) {
+        comment.votes += vote;
+        this.setState({ comments: copyComments });
+      }
+    });
+  };
+
   render() {
     const { comments } = this.state;
     return (
@@ -65,11 +76,19 @@ class Comments extends Component {
         />
         {comments.map((comment) => {
           return (
-            <CommentCard
-              key={comment.comment_id}
-              comment={comment}
-              commentRemover={this.commentRemover}
-            />
+            <section key={comment.comment_id} className="articleCard">
+              <Voter
+                key={comment.votes}
+                id={comment.comment_id}
+                type={"comments"}
+                updateVote={this.updateVote}
+              />
+              <CommentCard
+                key={comment.author}
+                comment={comment}
+                commentRemover={this.commentRemover}
+              />
+            </section>
           );
         })}
       </React.Fragment>

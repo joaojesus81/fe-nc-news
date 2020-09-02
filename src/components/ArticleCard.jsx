@@ -36,7 +36,7 @@ class ArticleCard extends Component {
     } else {
       const { title, author, created_at, votes, body } = this.state.article;
       return (
-        <React.Fragment>
+        <main>
           <section className="articleCard">
             <Voter
               id={this.props.articleId}
@@ -50,7 +50,7 @@ class ArticleCard extends Component {
           </section>
 
           <Comments articleId={this.props.articleId} />
-        </React.Fragment>
+        </main>
       );
     }
   }
