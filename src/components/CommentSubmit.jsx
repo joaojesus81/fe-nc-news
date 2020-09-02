@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import * as api from "../utils/api";
+import CommentCard from "./CommentCard";
 
 class CommentSubmit extends Component {
   state = {
     body: "",
-    username: "jessjelly",
+    username: "happyamy2016",
+    commentAdded: null,
   };
 
   componentDidMount() {
-    this.setState({ body: "", username: "jessjelly" });
+    this.setState({ body: "", username: "happyamy2016" });
   }
 
   handleChange = (changeEvent) => {
@@ -41,13 +43,20 @@ class CommentSubmit extends Component {
             rows="10"
             required
             onChange={this.handleChange}
-            value={this.state.body}
+            defaultValue={this.state.body}
           ></textarea>
           <br />
           <label htmlFor="user">User: </label>
-          <input type="text" name="user" id="user" disabled value="jessjelly" />
+          <input
+            type="text"
+            name="user"
+            id="user"
+            disabled
+            defaultValue="happyamy2016"
+          />
           <button>Submit</button>
         </form>
+        {this.state.commentAdded !== null && <CommentCard comment />}
       </section>
     );
   }

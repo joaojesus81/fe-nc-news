@@ -4,6 +4,7 @@ import { Link } from "@reach/router";
 import Loading from "./Loading";
 import SortingMenu from "./SortingMenu";
 import Voter from "./Voter";
+import ErrorPage from "./ErrorPage";
 
 class ListArticles extends Component {
   state = {
@@ -11,15 +12,24 @@ class ListArticles extends Component {
     isLoading: true,
     sortingOptions: "date",
     order: "desc",
+    error: null,
   };
 
   componentDidMount() {
-    this.fetchArticles(this.props.topic).then((articles) => {
-      this.setState({
-        articles,
-        isLoading: !this.state.isLoading,
+    this.fetchArticles(this.props.topic)
+      .then((articles) => {
+        console.log(response);
+        this.setState({
+          articles,
+          isLoading: !this.state.isLoading,
+        });
+      })
+      .catch((response) => {
+        console.log("error");
+        this.setState({
+          error: { status: response.status, msg: response.msg },
+        });
       });
-    });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -71,6 +81,8 @@ class ListArticles extends Component {
 
   render() {
     const { articles } = this.state;
+    if (this.state.error !== null)
+      return <ErrorPage error={this.state.error} />;
     if (this.state.isLoading) return <Loading />;
     return (
       <main>

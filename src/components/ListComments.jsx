@@ -10,15 +10,20 @@ class Comments extends Component {
     isLoading: true,
     commentAdded: false,
     commentRemoved: false,
+    error: null,
   };
 
   componentDidMount() {
-    this.getAllComments(this.props.articleId).then((comments) => {
-      this.setState({
-        comments: comments,
-        isLoading: !this.state.isLoading,
+    this.getAllComments(this.props.articleId)
+      .then((comments) => {
+        this.setState({
+          comments: comments,
+          isLoading: !this.state.isLoading,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -73,6 +78,7 @@ class Comments extends Component {
         <CommentSubmit
           articleId={this.props.articleId}
           commentAdder={this.commentAdder}
+          user={this.props.user}
         />
         {comments.map((comment) => {
           return (

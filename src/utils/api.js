@@ -13,19 +13,32 @@ export const getArticles = (topic) => {
     .get("/articles", { params: { topic: topic } })
     .then((articles) => {
       return articles.data.articles;
+    })
+    .catch((err) => {
+      Promise.reject(err);
     });
 };
 
 export const getTopics = () => {
-  return homeInstance.get("/topics").then((topics) => {
-    return topics.data.topics;
-  });
+  return homeInstance
+    .get("/topics")
+    .then((topics) => {
+      return topics.data.topics;
+    })
+    .catch((err) => {
+      return err.response;
+    });
 };
 
 export const getArticleById = (id) => {
-  return homeInstance.get(`/articles/${id}`).then((article) => {
-    return article.data.article;
-  });
+  return homeInstance
+    .get(`/articles/${id}`)
+    .then((article) => {
+      return article.data.article;
+    })
+    .catch((err) => {
+      return err.response;
+    });
 };
 
 export const getCommentsByArticleId = (articleId) => {
@@ -33,6 +46,9 @@ export const getCommentsByArticleId = (articleId) => {
     .get(`/articles/${articleId}/comments`)
     .then((comments) => {
       return comments.data.comments;
+    })
+    .catch((err) => {
+      return err.response;
     });
 };
 
@@ -43,6 +59,9 @@ export const getArticlesSorted = (sort_by, order, topic) => {
     })
     .then((articles) => {
       return articles.data.articles;
+    })
+    .catch((err) => {
+      return err.response;
     });
 };
 
@@ -51,13 +70,21 @@ export const postCommentToArticle = (id, comment) => {
     .post(`/articles/${id}/comments`, comment)
     .then(({ data }) => {
       return data[0];
+    })
+    .catch((err) => {
+      return err.response;
     });
 };
 
 export const deleteComment = (commentId) => {
-  return homeInstance.delete(`/comments/${commentId}`).then((response) => {
-    console.log(response);
-  });
+  return homeInstance
+    .delete(`/comments/${commentId}`)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((err) => {
+      return err.response;
+    });
 };
 
 export const patchVotes = (newVote, type, id) => {
@@ -65,5 +92,8 @@ export const patchVotes = (newVote, type, id) => {
     .patch(`/${type}/${id}`, { inc_votes: newVote })
     .then((response) => {
       console.log(response);
+    })
+    .catch((err) => {
+      return err.response;
     });
 };

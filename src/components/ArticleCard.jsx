@@ -8,16 +8,24 @@ class ArticleCard extends Component {
   state = {
     article: {},
     isLoading: true,
+    error: null,
   };
 
   componentDidMount() {
-    this.getArticle(this.props.articleId).then((article) => {
-      const singleArticle = article[0];
-      this.setState({
-        article: singleArticle,
-        isLoading: !this.state.isLoading,
+    this.getArticle(this.props.articleId)
+      .then((article) => {
+        const singleArticle = article[0];
+        this.setState({
+          article: singleArticle,
+          isLoading: !this.state.isLoading,
+        });
+      })
+      .catch((response) => {
+        console.log("error");
+        this.setState({
+          error: { status: response.status, msg: response.msg },
+        });
       });
-    });
   }
 
   updateVote = (vote) => {
