@@ -18,16 +18,15 @@ class ListArticles extends Component {
   componentDidMount() {
     this.fetchArticles(this.props.topic)
       .then((articles) => {
-        console.log(response);
         this.setState({
           articles,
           isLoading: !this.state.isLoading,
         });
       })
-      .catch((response) => {
-        console.log("error");
+      .catch(({ response }) => {
+        console.dir(response);
         this.setState({
-          error: { status: response.status, msg: response.msg },
+          error: { status: response.status, msg: response.data.msg },
         });
       });
   }
@@ -39,15 +38,29 @@ class ListArticles extends Component {
         this.state.sortingOptions,
         this.state.order,
         this.props.topic
-      ).then((articles) => {
-        this.setState({ articles, isLoading: false });
-      });
+      )
+        .then((articles) => {
+          this.setState({ articles, isLoading: false });
+        })
+        .catch(({ response }) => {
+          console.dir(response);
+          this.setState({
+            error: { status: response.status, msg: response.data.msg },
+          });
+        });
     }
     if (prevProps.topic !== this.props.topic) {
       this.setState({ isLoading: true });
-      this.fetchArticles(this.props.topic).then((articles) => {
-        this.setState({ articles, isLoading: false });
-      });
+      this.fetchArticles(this.props.topic)
+        .then((articles) => {
+          this.setState({ articles, isLoading: false });
+        })
+        .catch(({ response }) => {
+          console.dir(response);
+          this.setState({
+            error: { status: response.status, msg: response.data.msg },
+          });
+        });
     }
   }
 
