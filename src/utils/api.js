@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const homeInstance = axios.create({ baseURL: "http://192.168.1.22/api" });
-// const herokuInstance = axios.create({
-//   baseURL: "https://fox-fake-news.herokuapp.com/api",
-// });
+// const homeInstance = axios.create({ baseURL: "http://192.168.1.22/api" });
+const homeInstance = axios.create({
+  baseURL: "https://fox-fake-news.herokuapp.com/api",
+});
 // const awayFromHomeInstance = axios.create({
 //   baseURL: "http://sweetpeads.ddns.net/api",
 // });
