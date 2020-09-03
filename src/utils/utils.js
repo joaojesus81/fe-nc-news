@@ -1,4 +1,4 @@
-exports.dateFormat = (dateString) => {
+export const dateFormat = (dateString) => {
   if (dateString.length < 1) return dateString;
 
   // this will handle the post date and format it

@@ -4,7 +4,7 @@ import Loading from "./Loading";
 import Comments from "./ListComments";
 import Voter from "./Voter";
 import ErrorPage from "./ErrorPage";
-const { dateFormat } = require("../utils/utils");
+import * as utils from "../utils/utils";
 
 class ArticleCard extends Component {
   state = {
@@ -55,7 +55,7 @@ class ArticleCard extends Component {
           />
           <h4>{title}</h4>
           <h5>{body}</h5>
-          <p>{`Submitted ${dateFormat(created_at)} by ${author}`}</p>
+          <p>{`Submitted ${utils.dateFormat(created_at)} by ${author}`}</p>
           <p>{`Score: ${votes}`}</p>
         </section>
 
