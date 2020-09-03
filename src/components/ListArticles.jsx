@@ -5,6 +5,7 @@ import Loading from "./Loading";
 import SortingMenu from "./SortingMenu";
 import Voter from "./Voter";
 import ErrorPage from "./ErrorPage";
+const { dateFormat } = require("../utils/utils");
 
 class ListArticles extends Component {
   state = {
@@ -125,7 +126,9 @@ class ListArticles extends Component {
                   <Link to={`/article/${article_id}`}>
                     <h4>{title}</h4>
                   </Link>
-                  <p>{`Submitted by ${author} about ${topic} at ${created_at}`}</p>
+                  <p>{`Submitted ${dateFormat(
+                    created_at
+                  )} by ${author} about ${topic}`}</p>
                   <p>{`It has ${comment_count} comments and is scored at ${votes}`}</p>
                 </section>
               </li>
