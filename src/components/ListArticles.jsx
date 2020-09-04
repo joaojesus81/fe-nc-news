@@ -6,6 +6,7 @@ import SortingMenu from "./SortingMenu";
 import Voter from "./Voter";
 import ErrorPage from "./ErrorPage";
 import * as utils from "../utils/utils";
+import Pagination from "./Pagination";
 
 class ListArticles extends Component {
   state = {
@@ -14,6 +15,8 @@ class ListArticles extends Component {
     sortingOptions: "date",
     order: "desc",
     error: null,
+    currentPage: 1,
+    articlesPerPage: 5,
   };
 
   componentDidMount() {
@@ -93,9 +96,30 @@ class ListArticles extends Component {
     });
   };
 
+  paginate = (pageNumber) => {
+    this.setState({ currentPage: pageNumber });
+  };
+
+  changeArticlesPerPage = (numberArticles) => {
+    this.setState({ articlesPerPage: numberArticles });
+  };
+
   render() {
-    const { articles, error, isLoading, sortingOptions } = this.state;
+    const {
+      articles,
+      error,
+      isLoading,
+      sortingOptions,
+      currentPage,
+      articlesPerPage,
+    } = this.state;
     const { user } = this.props;
+    const indexOfLastArticle = currentPage * articlesPerPage;
+    const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
+    const currentArticles = articles.slice(
+      indexOfFirstArticle,
+      indexOfLastArticle
+    );
     if (error !== null) return <ErrorPage error={error} />;
     if (isLoading) return <Loading />;
     return (
@@ -103,9 +127,16 @@ class ListArticles extends Component {
         <SortingMenu
           setSortingBy={this.setSortingBy}
           sortingOptions={sortingOptions}
+          changeArticlesPerPage={this.changeArticlesPerPage}
+        />
+        <Pagination
+          articlesPerPage={articlesPerPage}
+          totalArticles={articles.length}
+          paginate={this.paginate}
+          currentPage={currentPage}
         />
         <ul className="mainList">
-          {articles.map((article) => {
+          {currentArticles.map((article) => {
             const {
               article_id,
               title,

@@ -301,6 +301,13 @@ header h1 {
   font-size: large;
 }
 
+.pagList {
+  display: flex;
+  direction: row;
+  list-style-type: none;
+  justify-content: center;
+}
+
 /* Small Screens */
 @media only screen and (max-width: 600px) {
   .commentCard {
