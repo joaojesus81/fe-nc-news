@@ -129,9 +129,142 @@ main {
 }
 
 .articleCard {
+  display: grid;
+  grid-template-columns: 3rem auto;
+  grid-template-rows: auto 1fr 1fr 1fr;
+  grid-template-areas:
+    "signIn signIn"
+    "upVote cardHeader"
+    "noVotes subP"
+    "downVote comP";
+
   background: var(--bg-secondary);
   color: var(--text-secondary);
   border-radius: 1.5rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.signIn {
+  grid-area: signIn;
+  justify-self: left;
+}
+
+.indArticleCard {
+  display: grid;
+  grid-template-columns: 3rem auto;
+  grid-template-rows: auto 3rem auto 3rem auto 5rem;
+  grid-template-areas:
+    "signIn signIn"
+    "upVote ."
+    "noVotes cardHeader"
+    "downVote ."
+    ". bodyP"
+    ". subP";
+
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-radius: 1.5rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.submitComment {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto auto auto auto;
+  grid-template-areas:
+    "userLabel"
+    "userInput"
+    "textLabel"
+    "textArea"
+    "subButton";
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-radius: 1.5rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.commentCard {
+  display: grid;
+  grid-template-columns: 3rem auto 5rem;
+  grid-template-rows: 2rem auto 2rem 2rem;
+  grid-template-areas:
+    "upVote bodyP bodyP"
+    "noVotes bodyP bodyP"
+    "downVote bodyP bodyP"
+    ". subP delButton";
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-radius: 1.5rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.delButton {
+  grid-area: delButton;
+}
+
+.userLabel {
+  grid-area: userLabel;
+  padding: 0.5rem;
+}
+
+.userInput {
+  grid-area: userInput;
+  padding: 0.5rem;
+}
+
+.textLabel {
+  grid-area: textLabel;
+  padding: 0.5rem;
+}
+
+.textArea {
+  grid-area: textArea;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.subButton {
+  grid-area: subButton;
+}
+
+.upVote {
+  grid-area: upVote;
+}
+
+.downVote {
+  grid-area: downVote;
+}
+
+.noVotes {
+  grid-area: noVotes;
+}
+
+.bodyP {
+  grid-area: bodyP;
+  text-align: justify;
+  margin-left: 1rem;
+}
+
+.cardHeader {
+  grid-area: cardHeader;
+  justify-self: left;
+  margin-left: 1rem;
+}
+
+.comP {
+  grid-area: comP;
+  justify-self: left;
+  margin-left: 1rem;
+}
+
+.subP {
+  grid-area: subP;
+  justify-self: left;
+  margin-left: 1rem;
 }
 
 .articleCard a:link,
@@ -170,8 +303,16 @@ header h1 {
 
 /* Small Screens */
 @media only screen and (max-width: 600px) {
+  .commentCard {
+    grid-template-rows: 2rem auto 2rem 5rem;
+  }
+
   header {
     margin: 0;
+  }
+
+  .mainList {
+    margin-bottom: 5rem;
   }
 
   header h1 {
@@ -215,6 +356,10 @@ header h1 {
 
 /* Large Screens */
 @media only screen and (min-width: 600px) {
+  body {
+    margin: 0 20rem 0 0;
+  }
+
   header h1 {
     float: right;
     margin-right: 2rem;

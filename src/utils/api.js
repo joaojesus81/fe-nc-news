@@ -50,20 +50,14 @@ export const postCommentToArticle = (id, comment) => {
   return homeInstance
     .post(`/articles/${id}/comments`, comment)
     .then(({ data }) => {
-      return data[0];
+      return data.comment[0];
     });
 };
 
 export const deleteComment = (commentId) => {
-  return homeInstance.delete(`/comments/${commentId}`).then((response) => {
-    console.log(response);
-  });
+  return homeInstance.delete(`/comments/${commentId}`);
 };
 
 export const patchVotes = (newVote, type, id) => {
-  return homeInstance
-    .patch(`/${type}/${id}`, { inc_votes: newVote })
-    .then((response) => {
-      console.log(response);
-    });
+  return homeInstance.patch(`/${type}/${id}`, { inc_votes: newVote });
 };

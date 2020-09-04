@@ -6,17 +6,22 @@ const CommentCard = (props) => {
   const { body, author, created_at, votes, comment_id } = props.comment;
   const deleteComment = () => {
     return api.deleteComment(comment_id).then(() => {
-      props.commentRemover();
+      props.removeComment(comment_id);
     });
   };
 
   return (
     <React.Fragment>
-      <p>{`Submitted ${utils.dateFormat(
+      <p className="noVotes">{votes}</p>
+      <p className="subP">{`Submitted ${utils.dateFormat(
         created_at
-      )} by ${author} with ${votes} votes`}</p>
-      <h5>{body}</h5>
-      <button onClick={deleteComment}>delete</button>
+      )} by ${author}`}</p>
+      <p className="bodyP">{body}</p>
+      {props.user === author && (
+        <button className="delButton" onClick={deleteComment}>
+          Delete
+        </button>
+      )}
     </React.Fragment>
   );
 };

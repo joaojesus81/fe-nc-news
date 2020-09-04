@@ -94,15 +94,15 @@ class ListArticles extends Component {
   };
 
   render() {
-    const { articles } = this.state;
-    if (this.state.error !== null)
-      return <ErrorPage error={this.state.error} />;
-    if (this.state.isLoading) return <Loading />;
+    const { articles, error, isLoading, sortingOptions } = this.state;
+    const { user } = this.props;
+    if (error !== null) return <ErrorPage error={error} />;
+    if (isLoading) return <Loading />;
     return (
       <main>
         <SortingMenu
           setSortingBy={this.setSortingBy}
-          sortingOptions={this.state.sortingOptions}
+          sortingOptions={sortingOptions}
         />
         <ul className="mainList">
           {articles.map((article) => {
@@ -118,18 +118,23 @@ class ListArticles extends Component {
             return (
               <li key={title}>
                 <section className="articleCard">
+                  {!user && <p className="signIn">You must sign in to vote</p>}
                   <Voter
                     id={article_id}
                     type={"articles"}
                     updateVote={this.updateVote}
+                    user={user}
                   />
-                  <Link to={`/article/${article_id}`}>
+                  <p className="noVotes">{votes}</p>
+                  <Link className="cardHeader" to={`/article/${article_id}`}>
                     <h4>{title}</h4>
                   </Link>
-                  <p>{`Submitted ${utils.dateFormat(
+                  <p className="subP">{`Submitted ${utils.dateFormat(
                     created_at
                   )} by ${author} about ${topic}`}</p>
-                  <p>{`It has ${comment_count} comments and is scored at ${votes}`}</p>
+                  <Link className="comP" to={`/article/${article_id}`}>
+                    <p>{`${comment_count} comments`}</p>
+                  </Link>
                 </section>
               </li>
             );

@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 import * as api from "../utils/api";
-import CommentCard from "./CommentCard";
+import Loading from "./Loading";
 
 class CommentSubmit extends Component {
   state = {
     body: "",
-    username: "happyamy2016",
-    commentAdded: null,
+    username: this.props.user,
+    isLoading: false,
   };
 
-  componentDidMount() {
-    this.setState({ body: "", username: "happyamy2016" });
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.comments.length !== this.props.comments.length) {
+      this.setState({ body: "", isLoading: false });
+    }
   }
 
   handleChange = (changeEvent) => {
@@ -19,7 +21,7 @@ class CommentSubmit extends Component {
   };
 
   postComment = () => {
-    api.postCommentToArticle(this.props.articleId, {
+    return api.postCommentToArticle(this.props.articleId, {
       username: this.state.username,
       body: this.state.body,
     });
@@ -27,36 +29,43 @@ class CommentSubmit extends Component {
 
   handleSubmit = (submitEvent) => {
     submitEvent.preventDefault();
-    this.postComment();
-    this.props.commentAdder();
+    this.setState({ isLoading: true });
+    return this.postComment().then((response) => {
+      this.props.addComment(response);
+    });
   };
 
   render() {
+    if (this.state.isLoading) return <Loading />;
     return (
       <section>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="body">Comment: </label>
-          <textarea
-            name="body"
-            id="body"
-            cols="30"
-            rows="10"
-            required
-            onChange={this.handleChange}
-            defaultValue={this.state.body}
-          ></textarea>
-          <br />
-          <label htmlFor="user">User: </label>
+        <form className="submitComment" onSubmit={this.handleSubmit}>
+          <label className="userLabel" htmlFor="user">
+            User:{" "}
+          </label>
           <input
+            className="userInput"
             type="text"
             name="user"
             id="user"
             disabled
             defaultValue="happyamy2016"
           />
-          <button>Submit</button>
+          <label className="textLabel" htmlFor="body">
+            Comment:{" "}
+          </label>
+          <textarea
+            className="textArea"
+            name="body"
+            id="body"
+            cols="30"
+            rows="10"
+            required
+            onChange={this.handleChange}
+            value={this.state.body}
+          ></textarea>
+          <button className="subButton">Submit</button>
         </form>
-        {this.state.commentAdded !== null && <CommentCard comment />}
       </section>
     );
   }

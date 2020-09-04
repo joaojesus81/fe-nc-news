@@ -31,9 +31,9 @@ class App extends Component {
         />
         <Nav />
         <Router>
-          <ListArticles path="/" />
-          <ListArticles path="/:topic" />
-          <ArticleCard path="/article/:articleId">
+          <ListArticles user={this.state.user} path="/" />
+          <ListArticles user={this.state.user} path="/:topic" />
+          <ArticleCard user={this.state.user} path="/article/:articleId">
             <Comments path="/" />
           </ArticleCard>
           <ErrorPage default />

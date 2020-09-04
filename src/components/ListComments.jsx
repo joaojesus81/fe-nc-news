@@ -3,13 +3,13 @@ import * as api from "../utils/api";
 import CommentSubmit from "./CommentSubmit";
 import CommentCard from "./CommentCard";
 import Voter from "./Voter";
+import ErrorPage from "./ErrorPage";
+import Loading from "./Loading";
 
 class Comments extends Component {
   state = {
     comments: [],
     isLoading: true,
-    commentAdded: false,
-    commentRemoved: false,
     error: null,
   };
 
@@ -21,40 +21,28 @@ class Comments extends Component {
           isLoading: !this.state.isLoading,
         });
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(({ response }) => {
+        this.setState({
+          error: { status: response.status, msg: response.data.msg },
+        });
       });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.commentAdded !== this.state.commentAdded) {
-      this.getAllComments(this.props.articleId).then((comments) => {
-        this.setState({
-          comments: comments,
-          isLoading: !this.state.isLoading,
-          commentAdded: false,
-          commentRemoved: false,
-        });
-      });
-    }
-    if (prevState.commentRemoved !== this.state.commentRemoved) {
-      this.getAllComments(this.props.articleId).then((comments) => {
-        this.setState({
-          comments: comments,
-          isLoading: !this.state.isLoading,
-          commentAdded: false,
-          commentRemoved: false,
-        });
-      });
-    }
-  }
-
-  commentAdder = () => {
-    this.setState({ commentAdded: true });
+  addComment = (newComment) => {
+    this.setState((currentState) => {
+      return { comments: [newComment, ...currentState.comments] };
+    });
   };
 
-  commentRemover = () => {
-    this.setState({ commentRemoved: true });
+  removeComment = (idComment) => {
+    this.state.comments.forEach((comment, index) => {
+      if (comment.comment_id === idComment) {
+        this.setState((currentState) => {
+          currentState.comments.splice(index, 1);
+          return { comments: [...currentState.comments] };
+        });
+      }
+    });
   };
 
   getAllComments = (articleId) => {
@@ -72,27 +60,36 @@ class Comments extends Component {
   };
 
   render() {
-    const { comments } = this.state;
+    const { comments, error, isLoading } = this.state;
+    const { articleId, user } = this.props;
+    if (error !== null) return <ErrorPage error={error} />;
+    if (isLoading) return <Loading />;
     return (
       <React.Fragment>
-        <CommentSubmit
-          articleId={this.props.articleId}
-          commentAdder={this.commentAdder}
-          user={this.props.user}
-        />
+        {this.props.user ? (
+          <CommentSubmit
+            comments={comments}
+            articleId={articleId}
+            addComment={this.addComment}
+            user={user}
+          />
+        ) : (
+          <p>You must sign in to comment</p>
+        )}
         {comments.map((comment) => {
           return (
-            <section key={comment.comment_id} className="articleCard">
+            <section key={comment.comment_id} className="commentCard">
               <Voter
-                key={comment.votes}
                 id={comment.comment_id}
                 type={"comments"}
                 updateVote={this.updateVote}
+                user={this.props.user}
               />
               <CommentCard
+                user={this.props.user}
                 key={comment.author}
                 comment={comment}
-                commentRemover={this.commentRemover}
+                removeComment={this.removeComment}
               />
             </section>
           );

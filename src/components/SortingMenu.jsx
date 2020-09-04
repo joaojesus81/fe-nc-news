@@ -9,7 +9,7 @@ const SortingMenu = (props) => {
 
   return (
     <form onChange={handleSelect} id="sortForm">
-      <label htmlFor="sorting"></label>
+      <label htmlFor="sorting">Sort by: </label>
       <select
         defaultValue={
           props.sortingOptions.charAt(0).toUpperCase() +

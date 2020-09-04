@@ -23,7 +23,6 @@ class ArticleCard extends Component {
         });
       })
       .catch(({ response }) => {
-        console.log(response);
         this.setState({
           error: { status: response.status, msg: response.data.msg },
         });
@@ -41,25 +40,30 @@ class ArticleCard extends Component {
   };
 
   render() {
+    const { title, author, created_at, votes, body } = this.state.article;
+    const { user, articleId } = this.props;
     if (this.state.error !== null)
       return <ErrorPage error={this.state.error} />;
     if (this.state.isLoading) return <Loading />;
-    const { title, author, created_at, votes, body } = this.state.article;
     return (
       <main>
-        <section className="articleCard">
+        <section className="indArticleCard">
+          {!user && <p className="signIn">You must sign in to vote</p>}
           <Voter
-            id={this.props.articleId}
+            id={articleId}
             type={"articles"}
             updateVote={this.updateVote}
+            user={user}
           />
-          <h4>{title}</h4>
-          <h5>{body}</h5>
-          <p>{`Submitted ${utils.dateFormat(created_at)} by ${author}`}</p>
-          <p>{`Score: ${votes}`}</p>
+          <p className="noVotes">{`${votes}`}</p>
+          <h4 className="cardHeader">{title}</h4>
+          <p className="bodyP">{body}</p>
+          <p className="subP">{`Submitted ${utils.dateFormat(
+            created_at
+          )} by ${author}`}</p>
         </section>
 
-        <Comments articleId={this.props.articleId} />
+        <Comments user={user} articleId={articleId} />
       </main>
     );
   }

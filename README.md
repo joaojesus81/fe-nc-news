@@ -1,68 +1,65 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# No news is good news
 
-## Available Scripts
+## Description: 
+Check the news at home or on the go using this most suitable news app. Check the latest articles and voice your opinion on them.
 
-In the project directory, you can run:
+## Link to website:
+https://no-news.netlify.app/
 
-### `npm start`
+## Prerequisites: 
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+For this app to work please make sure you have an up to date browser and an internet connection.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Installation:
 
-### `npm test`
+No installation required. Follow the provided link.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Usage:
+You should be able to navigate the website using the navigation bar on the left (bottom for smaller displays) and the links provided in each article.
 
-### `npm run build`
+### Instructions to run locally:
+1. Please make sure you're using the **recommended versions or later** of the software listed bellow.
+2. Start by cloning the backend repository. On your console write the following code:  
+    >git clone https://github.com/joaojesus81/be-nc-news
+3. Navigate to the newly created directory:
+    >cd be-nc-news
+4. Inside the directory run the following command to install needed dependencies:
+    >npm install
+5. After all dependencies are installed, you should be able to run the database setup:
+    >npm run setup-dbs
+6. Proceed seed the database and migrate to latest:
+    >npm run seed:prod migrate-latest:prod
+7. And start the server using nodemon to access the api:
+    >npm run start
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+1. For the frontend, start by cloning the frontend repository.
+   1. >git clone https://github.com/joaojesus81/fe-nc-news
+2. Navigate to the newly created directory:
+   1. >cd fe-nc-news
+3. Inside the directory run the following command to install needed dependencies:
+   1. >npm install
+4. After all dependencies are installed, you should be able to start the react server:
+    >npm run start
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Access to the backend repo:
+https://github.com/joaojesus81/be-nc-news
 
-### `npm run eject`
+### Access to the frontend repo:
+https://github.com/joaojesus81/fe-nc-news
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Versions:
+- Node: 14.4.0
+- npm: 6.14.8
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Authors:
+Joao Jesus  
+You can find me in my personal github:  
+https://github.com/joaojesus81
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## License:
+No news is good news is licensed under CC0-1.0.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Acknowledgments:
+Everyone at Northcoders and every other student in our cohort.
